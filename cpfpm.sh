@@ -15,7 +15,7 @@ chkconfig php-fpm off
 
 /scripts/rebuildhttpdconf
 /scripts/restartsrv httpd
-rm -rf /opt/xstack/cphstack
+rm -rf /opt/cpfpm
 
 echo -e '\e[45mI am not removing the extra options passed to easyapache \e[0m'
 echo -e '\e[45mYou can find them in follwing files /var/cpanel/easy/apache/rawopts/Apache2_4 /var/cpanel/easy/apache/rawopts/all_php5\e[0m/'
@@ -75,27 +75,27 @@ else
 	chmod a+x /etc/init.d/php-fpm
 	chkconfig php-fpm on
 	mkdir /var/run/php-fpm
-	mkdir -p /opt/xstack/cphstack
-	mkdir /opt/xstack/cphstack/php-fpm.pool.d
-	mkdir /opt/xstack/cphstack/defaultconfs
-	mkdir /opt/xstack/cphstack/scripts
+	mkdir -p /opt/cpfpm
+	mkdir /opt/cpfpm/php-fpm.pool.d
+	mkdir /opt/cpfpm/defaultconfs
+	mkdir /opt/cpfpm/scripts
 	wget -O /usr/local/etc/php-fpm.conf http://sysally.net/cphstack/php-fpm.conf.default
 	service php-fpm restart
 
 	
 	echo -e '\e[93mAdding Custom Apache templates\e[0m'
-	wget -O /opt/xstack/cphstack/defaultconfs/proxypassphp.include http://sysally.net/cphstack/proxypassphp.include
+	wget -O /opt/cpfpm/defaultconfs/proxypassphp.include http://sysally.net/cphstack/proxypassphp.include
 	cp -p /var/cpanel/templates/apache2_4/vhost.default /var/cpanel/templates/apache2_4/vhost.local
 	cp -p /var/cpanel/templates/apache2_4/ssl_vhost.default /var/cpanel/templates/apache2_4/ssl_vhost.local
-	sed -i '/DocumentRoot/ r /opt/xstack/cphstack/defaultconfs/proxypassphp.include' /var/cpanel/templates/apache2_4/vhost.local
-	sed -i '/DocumentRoot/ r /opt/xstack/cphstack/defaultconfs/proxypassphp.include' /var/cpanel/templates/apache2_4/ssl_vhost.local
-	wget -O /opt/xstack/cphstack/defaultconfs/php-fpm.pool.default http://sysally.net/cphstack/php-fpm.pool.default
+	sed -i '/DocumentRoot/ r /opt/cpfpm/defaultconfs/proxypassphp.include' /var/cpanel/templates/apache2_4/vhost.local
+	sed -i '/DocumentRoot/ r /opt/cpfpm/defaultconfs/proxypassphp.include' /var/cpanel/templates/apache2_4/ssl_vhost.local
+	wget -O /opt/cpfpm/defaultconfs/php-fpm.pool.default http://sysally.net/cphstack/php-fpm.pool.default
 
 	echo -e '\e[93mSetting up cpanel hooks\e[0m'
-	wget -O /opt/xstack/cphstack/scripts/setfpmpool http://sysally.net/cphstack/setfpmpool.script
-	wget -O /opt/xstack/cphstack/scripts/delfpmpool http://sysally.net/cphstack/delfpmpool.script
-	chmod a+x /opt/xstack/cphstack/scripts/setfpmpool
-	chmod a+x /opt/xstack/cphstack/scripts/delfpmpool
+	wget -O /opt/cpfpm/scripts/setfpmpool http://sysally.net/cphstack/setfpmpool.script
+	wget -O /opt/cpfpm/scripts/delfpmpool http://sysally.net/cphstack/delfpmpool.script
+	chmod a+x /opt/cpfpm/scripts/setfpmpool
+	chmod a+x /opt/cpfpm/scripts/delfpmpool
 	if [ -f /scripts/postwwwacct ];then
 		mv /scripts/postwwwacct /scripts/postwwwacctorig
 	fi
@@ -114,7 +114,7 @@ else
 
 	for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
 	do
-		/opt/xstack/cphstack/scripts/setfpmpool $CPANELUSER
+		/opt/cpfpm/scripts/setfpmpool $CPANELUSER
 	done
 	/scripts/rebuildhttpdconf
 	/scripts/restartsrv httpd
