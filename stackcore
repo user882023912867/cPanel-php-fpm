@@ -1,0 +1,14 @@
+mkdir -p /opt/xstack/cphstack/php-fpm.pool.d
+mkdir -p /opt/xstack/cphstack/defaultconfs
+mkdir -p /opt/xstack/cphstack/scripts
+
+cp /etc/init.d/php-fpm  /root/fpmstack.backup/
+cp /usr/local/etc/php-fpm.conf  /root/fpmstack.backup/
+cp /opt/xstack/cphstack/defaultconfs/proxypassphp.include  /root/fpmstack.backup/
+cp /opt/xstack/cphstack/defaultconfs/php-fpm.pool.default  /root/fpmstack.backup/
+cp /opt/xstack/cphstack/scripts/setfpmpool  /root/fpmstack.backup/
+cp /opt/xstack/cphstack/scripts/delfpmpool  /root/fpmstack.backup/
+cp /scripts/postwwwacct  /root/fpmstack.backup/
+cp /scripts/postkillacct  /root/fpmstack.backup/
+cp /etc/logrotate.d/phpfpm  /root/fpmstack.backup/
+

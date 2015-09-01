@@ -1,0 +1,11 @@
+#!/usr/bin/perl
+my %OPTS = @ARGV;
+my $cpaneluser = $OPTS{'user'};
+if ($cpaneluser eq "") {
+        exit;
+}
+system("/opt/xstack/cphstack/scripts/delfpmpool",$cpaneluser);
+if (-e "/scripts/postkillacctorig") {
+        print "\nSending variables to postkillacctorig.\n";
+        system("/scripts/postkillacctorig",@ARGV);
+}

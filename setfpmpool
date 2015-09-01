@@ -1,0 +1,5 @@
+#!/bin/bash
+cpaneluser=$1
+sed "s/CPANELUSER/$cpaneluser/g" /opt/xstack/cphstack/defaultconfs/php-fpm.pool.default > /opt/xstack/cphstack/php-fpm.pool.d/$cpaneluser.conf
+/etc/init.d/php-fpm reload
+exit 0
