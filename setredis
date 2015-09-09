@@ -1,4 +1,5 @@
 #!/bin/bash
+cpaneluser=$1
 
 REDISPASS=$(head -c 500 /dev/urandom | tr -dc 'a-zA-Z0-9~!@#$%^&' | fold -w 32 | head -n 1)
 
