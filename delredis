@@ -1,8 +1,10 @@
 #!/bin/bash
 cpaneluser=$1
 systemctl stop redis-${cpaneluser}.service
+systemctl disable redis-${cpaneluser}.service
 rm -f /usr/lib/systemd/system/redis-${cpaneluser}.service
 rm -rf /var/lib/redis/redis-${cpaneluser}
 rm -f /etc/redis-${cpaneluser}.conf
 systemctl daemon-reload
+systemctl reset-failed
 exit 0
