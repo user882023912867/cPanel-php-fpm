@@ -1,0 +1,21 @@
+#!/bin/bash
+
+REDISPASS=$(head -c 500 /dev/urandom | tr -dc 'a-zA-Z0-9~!@#$%^&' | fold -w 32 | head -n 1)
+
+mkdir -p /var/lib/redis/redis-${cpaneluser} && chmod 755 $_ && chown redis $_
+
+\cp -rf /etc/redis.conf /etc/redis-${cpaneluser}.conf
+\cp -rf /usr/lib/systemd/system/redis.service.default /usr/lib/systemd/system/redis-${cpaneluser}.service
+
+sed -i "s/daemonize no/daemonize yes/"  /etc/redis-${cpaneluser}.conf
+sed -i "s/^dir.*/dir \/var\/lib\/redis\/redis-${cpaneluser}\//"  /etc/redis-${cpaneluser}.conf
+sed -i "s/^logfile.*/logfile \/var\/log\/redis\/redis-${cpaneluser}.log/"  /etc/redis-${cpaneluser}.conf
+sed -i "s/^pidfile.*/pidfile \/var\/run\/redis\/redis-${cpaneluser}.pid/"  /etc/redis-${cpaneluser}.conf
+sed -i "s/.*unixsocket \/tmp\/redis.sock.*/unixsocket \/var\/run\/redis\/redis-${cpaneluser}.sock/" /etc/redis-${cpaneluser}.conf
+sed -i "s/.*unixsocketperm 755.*/unixsocketperm 755/" /etc/redis-${cpaneluser}.conf
+sed -i "s/.*requirepass foobared.*/requirepass ${REDISPASS}/" /etc/redis-${cpaneluser}.conf
+
+sed -i "s/redis.conf/redis-${cpaneluser}.conf/" /usr/lib/systemd/system/redis-${cpaneluser}.service
+
+systemctl daemon-reload
+systemctl enable redis-${cpaneluser} >/dev/null 2>&1
