@@ -4,6 +4,7 @@ my $cpaneluser = $OPTS{'user'};
 if ($cpaneluser eq "") {
         exit;
 }
+system("/opt/cpfpm/scripts/setredis",$cpaneluser);
 system("/opt/cpfpm/scripts/setfpmpool",$cpaneluser);
 if (-e "/scripts/postwwwacctorig") {
         print "\nSending variables to postwwwacctorig.\n";
