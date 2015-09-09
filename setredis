@@ -1,3 +1,4 @@
+
 #!/bin/bash
 cpaneluser=$1
 
@@ -11,7 +12,9 @@ mkdir -p /var/lib/redis/redis-${cpaneluser} && chmod 755 $_ && chown redis $_
 sed -i "s/daemonize no/daemonize yes/"  /etc/redis-${cpaneluser}.conf
 sed -i "s/^dir.*/dir \/var\/lib\/redis\/redis-${cpaneluser}\//"  /etc/redis-${cpaneluser}.conf
 sed -i "s/^logfile.*/logfile \/var\/log\/redis\/redis-${cpaneluser}.log/"  /etc/redis-${cpaneluser}.conf
-sed -i "s/^pidfile.*/pidfile \/var\/run\/redis\/redis-${cpaneluser}.pid/"  /etc/redis-${cpaneluser}.conf
+sed -i "s/^pidfile.*/pidfile \/var\/run\/redis\/redis-${cpaneluser}.pid/"  /etc/redis-${cpaneluser}.conf 
+sed -i "s/port 6379/port 0/" /etc/redis-${cpaneluser}.conf
+sed -i "s/bind 127.0.0.1//g" /etc/redis-${cpaneluser}.conf
 sed -i "s/.*unixsocket \/tmp\/redis.sock.*/unixsocket \/var\/run\/redis\/redis-${cpaneluser}.sock/" /etc/redis-${cpaneluser}.conf
 sed -i "s/.*unixsocketperm 755.*/unixsocketperm 755/" /etc/redis-${cpaneluser}.conf
 sed -i "s/.*requirepass foobared.*/requirepass ${REDISPASS}/" /etc/redis-${cpaneluser}.conf
@@ -20,3 +23,4 @@ sed -i "s/redis.conf/redis-${cpaneluser}.conf/" /usr/lib/systemd/system/redis-${
 
 systemctl daemon-reload
 systemctl enable redis-${cpaneluser} >/dev/null 2>&1
+systemctl restart redis-${cpaneluser}.service >/dev/null 2>&1
