@@ -1,4 +1,5 @@
 #!/bin/bash
+## (C) sysally.net
 
 cphstack_uninstall(){
 
@@ -21,7 +22,7 @@ echo -e '\e[45mI am not removing the extra options passed to easyapache \e[0m'
 echo -e '\e[45mYou can find them in follwing files /var/cpanel/easy/apache/rawopts/Apache2_4 /var/cpanel/easy/apache/rawopts/all_php5\e[0m/'
 echo -e '\e[45mPHP-FPM startup script and config files are also not removed /etc/init.d/php-fpm /usr/local/etc/php-fpm.conf /etc/logrotate.d/phpfpm\e[0m/'
 echo -e '\e[45mYou may need to recompile Apache to use any other MPM other than event \e[0m'
-echo -e '\e[45mFor technical support email- support@sysally.net\e[0m/'
+
 
 
 
@@ -49,7 +50,7 @@ else
 	php_fpm=1
 fi
 
-if [ $proxy_fcgi -eq 1 -o $php_fpm -eq 1 ];then
+if [ ${proxy_fcgi} -eq 1 -o ${php_fpm} -eq 1 ];then
 	#Add custom compile options to Apache and PHP
 	if [ -f /var/cpanel/easy/apache/rawopts/all_php5 ];then
 		grep 'enable-fastcgi' /var/cpanel/easy/apache/rawopts/all_php5 || echo '--enable-fastcgi' >> /var/cpanel/easy/apache/rawopts/all_php5
@@ -68,10 +69,9 @@ if [ $proxy_fcgi -eq 1 -o $php_fpm -eq 1 ];then
 	echo -e '\e[45mEnable EVENT MPM for performance \e[0m'
 	echo -e '\e[45mDo NOT build php as apache module as this is not thread safe and event MPM is threaded \e[0m'
 	echo -e '\e[45mOnce EasyApache is complete with above options rerun this script again with install option selected to complete cpHstack installation \e[0m'
-	echo -e '\e[45mContact support@sysally.net for technical support \e[0m'
 else 
 	echo -e '\e[93mProceeding with cpHstack setup\e[0m'
-	wget -O /etc/init.d/php-fpm http://sysally.net/cphstack/init.d.php-fpm
+	wget -O /etc/init.d/php-fpm https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/init.d.php-fpm
 	chmod a+x /etc/init.d/php-fpm
 	chkconfig php-fpm on
 	mkdir /var/run/php-fpm
@@ -79,59 +79,51 @@ else
 	mkdir /opt/cpfpm/php-fpm.pool.d
 	mkdir /opt/cpfpm/defaultconfs
 	mkdir /opt/cpfpm/scripts
-	wget -O /usr/local/etc/php-fpm.conf http://sysally.net/cphstack/php-fpm.conf.default
+	wget -O /usr/local/etc/php-fpm.conf https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/php-fpm.conf.default
 	service php-fpm restart
 
 	
 	echo -e '\e[93mAdding Custom Apache templates\e[0m'
-	wget -O /opt/cpfpm/defaultconfs/proxypassphp.include http://sysally.net/cphstack/proxypassphp.include
+	wget -O /opt/cpfpm/defaultconfs/proxypassphp.include https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/proxypassphp.include
 	cp -p /var/cpanel/templates/apache2_4/vhost.default /var/cpanel/templates/apache2_4/vhost.local
 	cp -p /var/cpanel/templates/apache2_4/ssl_vhost.default /var/cpanel/templates/apache2_4/ssl_vhost.local
 	sed -i '/DocumentRoot/ r /opt/cpfpm/defaultconfs/proxypassphp.include' /var/cpanel/templates/apache2_4/vhost.local
 	sed -i '/DocumentRoot/ r /opt/cpfpm/defaultconfs/proxypassphp.include' /var/cpanel/templates/apache2_4/ssl_vhost.local
-	wget -O /opt/cpfpm/defaultconfs/php-fpm.pool.default http://sysally.net/cphstack/php-fpm.pool.default
+	wget -O /opt/cpfpm/defaultconfs/php-fpm.pool.default https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/php-fpm.pool.default
 
 	echo -e '\e[93mSetting up cpanel hooks\e[0m'
-	wget -O /opt/cpfpm/scripts/setfpmpool http://sysally.net/cphstack/setfpmpool.script
-	wget -O /opt/cpfpm/scripts/delfpmpool http://sysally.net/cphstack/delfpmpool.script
+	wget -O /opt/cpfpm/scripts/setfpmpool https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/setfpmpool
+	wget -O /opt/cpfpm/scripts/delfpmpool https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/delfpmpool
 	chmod a+x /opt/cpfpm/scripts/setfpmpool
 	chmod a+x /opt/cpfpm/scripts/delfpmpool
 	if [ -f /scripts/postwwwacct ];then
 		mv /scripts/postwwwacct /scripts/postwwwacctorig
 	fi
-	wget -O /scripts/postwwwacct http://sysally.net/cphstack/postwwwacct.script
+	wget -O /scripts/postwwwacct https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/postwwwacct
 	chmod a+x /scripts/postwwwacct
 
 	if [ -f /scripts/postkillacct ];then
 		mv /scripts/postkillacct /scripts/postkillacctorig
 	fi
-	wget -O /scripts/postkillacct http://sysally.net/cphstack/postkillacct.script	
+	wget -O /scripts/postkillacct https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/postkillacct	
 	chmod a+x /scripts/postkillacct
 	
-	wget -O /etc/logrotate.d/phpfpm http://sysally.net/cphstack/php-fpm.logrotate.default
+	wget -O /etc/logrotate.d/phpfpm https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/php-fpm.logrotate.default
 
 	echo -e '\e[93mInitializing FPM pools and rebuilding Apache conf\e[0m'
 
 	for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
 	do
-		/opt/cpfpm/scripts/setfpmpool $CPANELUSER
+		/opt/cpfpm/scripts/setfpmpool ${CPANELUSER}
 	done
 	/scripts/rebuildhttpdconf
 	/scripts/restartsrv httpd
 	
-
 	#Tweaks
-	sysctl -w net.core.somaxconn=4096
-	grep "net.core.somaxconn" /etc/sysctl.conf || echo "net.core.somaxconn = 4096" >> /etc/sysctl.conf
 	echo 'exe:/usr/local/sbin/php-fpm' >> /etc/csf/csf.pignore
 	
-
 	echo -e '\e[45mcpHstack installation complete\e[0m'	
 	echo -e '\e[45mFor more info please refer\e[0m - http://wiki.apache.org/httpd/PHP-FPM '	
-	
-	echo -e '\e[45mFor technical support email\e[0m - support@sysally.net'	
-
-
 fi
 }
 
