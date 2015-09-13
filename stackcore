@@ -1,14 +1,11 @@
-mkdir -p /opt/cpfpm/php-fpm.pool.d
-mkdir -p /opt/cpfpm/defaultconfs
-mkdir -p /opt/cpfpm/scripts
-
-
 /etc/init.d/php-fpm
 /usr/local/etc/php-fpm.conf
-/opt/xstack/cphstack/defaultconfs/proxypassphp.include
-/opt/xstack/cphstack/defaultconfs/php-fpm.pool.default
-/opt/xstack/cphstack/scripts/setfpmpool
-/opt/xstack/cphstack/scripts/delfpmpool
+/opt/cpfpm/defaultconfs/proxypassphp.include
+/opt/cpfpm/defaultconfs/php-fpm.pool.default
+/opt/cpfpm/scripts/setfpmpool
+/opt/cpfpm/scripts/delfpmpool
+/opt/cpfpm/scripts/delredis
+/opt/cpfpm/scripts/setredis
 /scripts/postwwwacct
 /scripts/postkillacct
 /etc/logrotate.d/phpfpm
