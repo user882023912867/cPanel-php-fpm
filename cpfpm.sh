@@ -93,9 +93,10 @@ else
 
 	echo -e '\e[93mSetting up cpanel hooks\e[0m'
 	wget -O /opt/cpfpm/scripts/setfpmpool https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/setfpmpool
+	wget -O /opt/cpfpm/scripts/setredis   https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/setredis
 	wget -O /opt/cpfpm/scripts/delfpmpool https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/delfpmpool
-	chmod a+x /opt/cpfpm/scripts/setfpmpool
-	chmod a+x /opt/cpfpm/scripts/delfpmpool
+	wget -O /opt/cpfpm/scripts/delredis   https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/delredis
+	chmod +x /opt/cpfpm/scripts/*
 	if [ -f /scripts/postwwwacct ];then
 		mv /scripts/postwwwacct /scripts/postwwwacctorig
 	fi
@@ -116,9 +117,10 @@ else
 	do
 		/opt/cpfpm/scripts/setfpmpool ${CPANELUSER}
 	done
+	
 	/scripts/rebuildhttpdconf
 	/scripts/restartsrv httpd
-	
+
 	#Tweaks
 	echo 'exe:/usr/local/sbin/php-fpm' >> /etc/csf/csf.pignore
 	
