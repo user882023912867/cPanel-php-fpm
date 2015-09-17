@@ -23,6 +23,7 @@ sed -i "s/.*# maxmemory-policy volatile-lru.*/maxmemory-policy allkeys-lru/" /et
 
 sed -i "s/redis.conf/redis-${cpaneluser}.conf/" /usr/lib/systemd/system/redis-${cpaneluser}.service
 
+chown redis /home/${cpaneluser}/redis-${cpaneluser}.sock
 systemctl daemon-reload
 systemctl enable redis-${cpaneluser} >/dev/null 2>&1
 systemctl restart redis-${cpaneluser}.service >/dev/null 2>&1
