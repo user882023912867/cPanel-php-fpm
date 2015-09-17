@@ -405,6 +405,8 @@ chdir = /public_html/
 ;                specified at startup with the -d argument
 ;php_admin_value[sendmail_path] = /usr/sbin/sendmail -t -i -f www@my.domain.com
 php_flag[display_errors] = off
-php_admin_value[error_log] = /home/CPANELUSER/public_html/var/log/fpm-php.www.log
+php_admin_value[error_log] = /public_html/var/log/fpm-php.www.log
+php_admin_value[doc_root] = /public_html/
+php_admin_value[cgi.fix_pathinfo] = 0
 php_admin_flag[log_errors] = on
 ;php_admin_value[memory_limit] = 32M
