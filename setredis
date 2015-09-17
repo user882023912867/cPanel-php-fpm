@@ -2,12 +2,12 @@
 #!/bin/bash
 cpaneluser=$1
 
-REDISPASS=$(head -c 500 /dev/urandom | tr -dc 'a-zA-Z0-9~@&' | fold -w 32 | head -n 1)
+REDISPASS=$(head -c 500 /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 
 mkdir -p /var/lib/redis/redis-${cpaneluser} && chmod 755 $_ && chown redis $_
 
 \cp -rf /etc/redis.conf /etc/redis-${cpaneluser}.conf
-\cp -rf /usr/lib/systemd/system/redis.service.default /usr/lib/systemd/system/redis-${cpaneluser}.service
+\cp -rf /usr/lib/systemd/system/redis.service /usr/lib/systemd/system/redis-${cpaneluser}.service
 
 sed -i "s/daemonize no/daemonize yes/"  /etc/redis-${cpaneluser}.conf
 sed -i "s/^dir.*/dir \/var\/lib\/redis\/redis-${cpaneluser}\//"  /etc/redis-${cpaneluser}.conf
@@ -15,7 +15,7 @@ sed -i "s/^logfile.*/logfile \/var\/log\/redis\/redis-${cpaneluser}.log/"  /etc/
 sed -i "s/^pidfile.*/pidfile \/var\/run\/redis\/redis-${cpaneluser}.pid/"  /etc/redis-${cpaneluser}.conf 
 sed -i "s/port 6379/port 0/" /etc/redis-${cpaneluser}.conf
 sed -i "s/bind 127.0.0.1//g" /etc/redis-${cpaneluser}.conf
-sed -i "s/.*unixsocket \/tmp\/redis.sock.*/unixsocket \/var\/run\/redis\/redis-${cpaneluser}.sock/" /etc/redis-${cpaneluser}.conf
+sed -i "s/.*unixsocket \/tmp\/redis.sock.*/unixsocket \/home\/${cpaneluser}\/redis-${cpaneluser}.sock/" /etc/redis-${cpaneluser}.conf
 sed -i "s/.*unixsocketperm.*/unixsocketperm 755/" /etc/redis-${cpaneluser}.conf
 sed -i "s/.*requirepass foobared.*/requirepass ${REDISPASS}/" /etc/redis-${cpaneluser}.conf
 sed -i "s/.*# maxmemory <bytes>.*/maxmemory 256mb/" /etc/redis-${cpaneluser}.conf
