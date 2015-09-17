@@ -16,7 +16,7 @@ sed -i "s/^pidfile.*/pidfile \/var\/run\/redis\/redis-${cpaneluser}.pid/"  /etc/
 sed -i "s/port 6379/port 0/" /etc/redis-${cpaneluser}.conf
 sed -i "s/bind 127.0.0.1//g" /etc/redis-${cpaneluser}.conf
 sed -i "s/.*unixsocket \/tmp\/redis.sock.*/unixsocket \/home\/${cpaneluser}\/redis-${cpaneluser}.sock/" /etc/redis-${cpaneluser}.conf
-sed -i "s/.*unixsocketperm.*/unixsocketperm 755/" /etc/redis-${cpaneluser}.conf
+sed -i "s/.*unixsocketperm.*/unixsocketperm 777/" /etc/redis-${cpaneluser}.conf
 sed -i "s/.*requirepass foobared.*/requirepass ${REDISPASS}/" /etc/redis-${cpaneluser}.conf
 sed -i "s/.*# maxmemory <bytes>.*/maxmemory 256mb/" /etc/redis-${cpaneluser}.conf
 sed -i "s/.*# maxmemory-policy volatile-lru.*/maxmemory-policy allkeys-lru/" /etc/redis-${cpaneluser}.conf
