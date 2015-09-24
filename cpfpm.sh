@@ -1,7 +1,7 @@
 #!/bin/bash
 ## (C) sysally.net
 
-cphstack_uninstall(){
+cpfpm_uninstall(){
 
 rm -f /var/cpanel/templates/apache2_4/vhost.local 
 rm -f /var/cpanel/templates/apache2_4/ssl_vhost.local
@@ -28,7 +28,7 @@ echo -e '\e[45mYou may need to recompile Apache to use any other MPM other than 
 
 }
 
-cphstack_install(){
+cpfpm_install(){
 
 proxy_fcgi=0
 php_fpm=0
@@ -108,11 +108,22 @@ else
 	fi
 	wget -O /scripts/postkillacct https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/postkillacct	
 	chmod a+x /scripts/postkillacct
-	
 	wget -O /etc/logrotate.d/phpfpm https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/php-fpm.logrotate.default
 
-	echo -e '\e[93mInitializing FPM pools and rebuilding Apache conf\e[0m'
+        echo -e '\e[93mInstalling GeoIP module\e[0m'
+        wget -qO - https://github.com/maxmind/geoip-api-mod_geoip2/archive/1.2.10.tar.gz | tar -xzp && cd geoip-*
+        apxs -i -a -L/usr/lib64 -I/usr/include -lGeoIP -c mod_geoip.c
 
+        echo -e '\e[93mAdding Custom Apache includes\e[0m'
+	wget -O /etc/httpd/conf/includes/pre_main_global.conf https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/pre_main_global.conf
+	yum -y install GeoIP*
+        SERVER_IP_ADDR=$(ip route get 1 | awk '{print $NF;exit}')
+        USER_GEOIP=$(geoiplookup ${USER_IP} | awk {'print $4'})
+        USER_IP=$(last -i | grep "root.*still logged in" | awk '{print $3}')
+        sed -i "s/{MYCOUNTRY}/${USER_GEOIP//,/}/" /etc/httpd/conf/includes/pre_main_global.conf
+        sed -i "s/{MYIPADDRESS}/${USER_IP}/" /etc/httpd/conf/includes/pre_main_global.conf
+        
+	echo -e '\e[93mInitializing FPM pools and rebuilding Apache conf\e[0m'
 	for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
 	do
 		/opt/cpfpm/scripts/setfpmpool ${CPANELUSER}
@@ -120,9 +131,6 @@ else
 	
 	/scripts/rebuildhttpdconf
 	/scripts/restartsrv httpd
-
-	#Tweaks
-	echo 'exe:/usr/local/sbin/php-fpm' >> /etc/csf/csf.pignore
 	
 	echo -e '\e[45mcpHstack installation complete\e[0m'	
 	echo -e '\e[45mFor more info please refer\e[0m - http://wiki.apache.org/httpd/PHP-FPM '	
@@ -134,23 +142,23 @@ if [ $# -ne 1 ]
 then
         echo "usage $0 COMMAND"
 	echo "COMMAND:"
-	echo " install - Install cpHstack"
-	echo " uninstall - Uninstall cpHstack"
+	echo " install - Install cpfpm"
+	echo " uninstall - Uninstall cpfpm"
 	echo " help - Usage Instructions for this script"
         exit 1
 else
 	case "$1" in
 	install)
-		cphstack_install
+		cpfpm_install
 		;;
 	uninstall)
-		cphstack_uninstall
+		cpfpm_uninstall
 		;;
 	help)
 		echo "usage $0 COMMAND"
         	echo "COMMAND:"
-        	echo " install - Install cpHstack"
-        	echo " uninstall - Uninstall cpHstack"
+        	echo " install - Install cpfpm"
+        	echo " uninstall - Uninstall cpfpm"
         	echo " help - Usage Instructions for this script"
         	exit 0
 		;;
