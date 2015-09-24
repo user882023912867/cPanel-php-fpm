@@ -116,8 +116,8 @@ else
         SERVER_IP_ADDR=$(ip route get 1 | awk '{print $NF;exit}')
         USER_GEOIP=$(geoiplookup ${USER_IP} | awk {'print $4'})
         USER_IP=$(last -i | grep "root.*still logged in" | awk '{print $3}')
-        sed -i "s/{MYCOUNTRY}/${USER_GEOIP//,/}/" /etc/httpd/conf/includes/pre_main_global.conf
-        sed -i "s/{MYIPADDRESS}/${USER_IP}/" /etc/httpd/conf/includes/pre_main_global.conf
+        sed -i "s/MYCOUNTRY/${USER_GEOIP//,/}/" /etc/httpd/conf/includes/pre_main_global.conf
+        sed -i "s/MYIPADDRESS/${USER_IP}/" /etc/httpd/conf/includes/pre_main_global.conf
         
 	echo -e '\e[93mInitializing FPM pools and rebuilding Apache conf\e[0m'
 	for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
