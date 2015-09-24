@@ -64,9 +64,9 @@ if [ ${proxy_fcgi} -eq 1 -o ${php_fpm} -eq 1 ];then
 	echo -e '\e[45mYou should choose Apache 2.4 \e[0m'
 	echo -e '\e[45mEnable EVENT MPM for performance \e[0m'
 	echo -e '\e[45mDo NOT build php as apache module as this is not thread safe and event MPM is threaded \e[0m'
-	echo -e '\e[45mOnce EasyApache is complete with above options rerun this script again with install option selected to complete cpHstack installation \e[0m'
+	echo -e '\e[45mOnce EasyApache is complete with above options rerun this script again with install option selected to complete cpfpm installation \e[0m'
 else 
-	echo -e '\e[93mProceeding with cpHstack setup\e[0m'
+	echo -e '\e[93mProceeding with cpfpm setup\e[0m'
 	wget -O /etc/init.d/php-fpm https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/init.d.php-fpm
 	chmod a+x /etc/init.d/php-fpm
 	chkconfig php-fpm on
@@ -128,7 +128,7 @@ else
 	/scripts/rebuildhttpdconf
 	/scripts/restartsrv httpd
 	
-	echo -e '\e[45mcpHstack installation complete\e[0m'	
+	echo -e '\e[45mcpfpm installation complete\e[0m'	
 	echo -e '\e[45mFor more info please refer\e[0m - http://wiki.apache.org/httpd/PHP-FPM '	
 fi
 }
