@@ -109,7 +109,7 @@ else
         echo -e '\e[93mInstalling GeoIP module\e[0m'
         yum -y install GeoIP*
         wget -qO - https://github.com/maxmind/geoip-api-mod_geoip2/archive/1.2.10.tar.gz | tar -xzp && cd geoip-*
-        apxs -i -a -L/usr/lib64 -I/usr/include -lGeoIP -c mod_geoip.c
+        apxs -i -L/usr/lib64 -I/usr/include -lGeoIP -c mod_geoip.c
 
         echo -e '\e[93mAdding Custom Apache includes\e[0m'
 	wget -O /etc/httpd/conf/includes/pre_main_global.conf https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/pre_main_global.conf
