@@ -23,16 +23,12 @@ echo -e '\e[45mYou can find them in follwing files /var/cpanel/easy/apache/rawop
 echo -e '\e[45mPHP-FPM startup script and config files are also not removed /etc/init.d/php-fpm /usr/local/etc/php-fpm.conf /etc/logrotate.d/phpfpm\e[0m/'
 echo -e '\e[45mYou may need to recompile Apache to use any other MPM other than event \e[0m'
 
-
-
-
 }
 
 cpfpm_install(){
 
 proxy_fcgi=0
 php_fpm=0
-
 
 #Checking Apache for mod_proxy_fcgi
 /usr/local/apache/bin/apachectl -l|grep mod_proxy_fcgi
