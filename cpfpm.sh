@@ -107,12 +107,12 @@ else
 	wget -O /etc/logrotate.d/phpfpm https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/php-fpm.logrotate.default
 
         echo -e '\e[93mInstalling GeoIP module\e[0m'
+        yum -y install GeoIP*
         wget -qO - https://github.com/maxmind/geoip-api-mod_geoip2/archive/1.2.10.tar.gz | tar -xzp && cd geoip-*
         apxs -i -a -L/usr/lib64 -I/usr/include -lGeoIP -c mod_geoip.c
 
         echo -e '\e[93mAdding Custom Apache includes\e[0m'
 	wget -O /etc/httpd/conf/includes/pre_main_global.conf https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/pre_main_global.conf
-	yum -y install GeoIP*
         SERVER_IP_ADDR=$(ip route get 1 | awk '{print $NF;exit}')
         USER_GEOIP=$(geoiplookup ${USER_IP} | awk {'print $4'})
         USER_IP=$(last -i | grep "root.*still logged in" | awk '{print $3}')
