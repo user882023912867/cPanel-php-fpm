@@ -114,8 +114,8 @@ else
         echo -e '\e[93mAdding Custom Apache includes\e[0m'
 	wget -O /etc/httpd/conf/includes/pre_main_global.conf https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/pre_main_global.conf
         SERVER_IP_ADDR=$(ip route get 1 | awk '{print $NF;exit}')
-        USER_GEOIP=$(geoiplookup ${USER_IP} | awk {'print $4'})
         USER_IP=$(last -i | grep "root.*still logged in" | awk '{print $3}')
+        USER_GEOIP=$(geoiplookup ${USER_IP} | awk {'print $4'})
         sed -i "s/MYCOUNTRY/${USER_GEOIP//,/}/" /etc/httpd/conf/includes/pre_main_global.conf
         sed -i "s/MYIPADDRESS/${USER_IP}/" /etc/httpd/conf/includes/pre_main_global.conf
         
