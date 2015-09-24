@@ -4,5 +4,6 @@ sed "s/CPANELUSER/${cpaneluser}/g" /opt/cpfpm/defaultconfs/php-fpm.pool.default 
 mkdir -p /home/${cpaneluser}/usr/share
 \cp -rf /usr/share/zoneinfo  /home/${cpaneluser}/usr/share/
 mkdir -p /home/${cpaneluser}/var/log/php-fpm
+chown -R ${cpaneluser}:nobody /home/${cpaneluser}/var/log/php-fpm
 /etc/init.d/php-fpm reload
 exit 0
