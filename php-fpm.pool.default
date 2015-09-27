@@ -39,7 +39,7 @@ group = CPANELUSER
 ;                            specific port;
 ;   '/path/to/unix/socket' - to listen on a unix socket.
 ; Note: This value is mandatory.
-listen = /var/run/php-fpm/CPANELUSER.sock
+listen = /home/CPANELUSER/var/run/php-fpm/CPANELUSER.sock
 
 ; Set listen(2) backlog.
 ; Default Value: 128 (-1 on FreeBSD and OpenBSD)
@@ -60,7 +60,7 @@ listen.mode = 0666
 ; must be separated by a comma. If this value is left blank, connections will be
 ; accepted from any ip address.
 ; Default Value: any
-;listen.allowed_clients = 127.0.0.1
+listen.allowed_clients = 127.0.0.1
 
 ; Specify the nice(2) priority to apply to the pool processes (only if set)
 ; The value can vary from -19 (highest priority) to 20 (lower priority)
@@ -349,7 +349,7 @@ chroot = /home/CPANELUSER/
 ; Chdir to this directory at the start.
 ; Note: relative path can be used.
 ; Default Value: current directory or / when chroot
-chdir = /public_html
+chdir = /public_html/
  
 ; Redirect worker stdout and stderr into main error log. If not set, stdout and
 ; stderr will be redirected to /dev/null according to FastCGI specs.
@@ -406,7 +406,9 @@ chdir = /public_html
 ;php_admin_value[sendmail_path] = /usr/sbin/sendmail -t -i -f www@my.domain.com
 php_flag[display_errors] = off
 php_admin_value[error_log] = /public_html/var/log/php-fpm-error.log
-php_admin_value[doc_root] = /public_html
+php_admin_value[doc_root] = /public_html/
+php_admin_value[open_basedir] = /public_html/
 php_admin_value[cgi.fix_pathinfo] = 0
+php_admin_value[iconv.internal_encoding] = UTF-8
 php_admin_flag[log_errors] = on
 php_admin_value[memory_limit] = 256M
