@@ -78,7 +78,6 @@ else
 	wget -O /usr/local/etc/php-fpm.conf https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/php-fpm.conf.default
 	service php-fpm restart
 
-	
 	echo -e '\e[93mAdding Custom Apache templates\e[0m'
 	wget -O /opt/cpfpm/defaultconfs/proxypassphp.include https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/proxypassphp.include
 	cp -p /var/cpanel/templates/apache2_4/vhost.default /var/cpanel/templates/apache2_4/vhost.local
@@ -132,7 +131,6 @@ else
 	echo -e '\e[45mFor more info please refer\e[0m - http://wiki.apache.org/httpd/PHP-FPM '	
 fi
 }
-
 
 if [ $# -ne 1 ]
 then
