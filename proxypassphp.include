@@ -1,8 +1,10 @@
     SetEnvIfNoCase ^Authorization$ "(.+)" HTTP_AUTHORIZATION=$1
 	
     <FilesMatch \.php$>
-        SetHandler "proxy:unix:/var/run/php-fpm/[% vhost.user %].sock|fcgi://localhost"
+        SetHandler "proxy:unix:/home/CPANELUSER/var/run/php-fpm/[% vhost.user %].sock|fcgi://localhost"
     </FilesMatch>
+    
+    #ProxyPassMatch ^/(.*\.php(/.*)?)$  unix:/home/CPANELUSER/var/run/php-fpm/example.sock|fcgi://127.0.0.1:9000/public_html
 
     <Directory [% vhost.documentroot %]>
         AllowOverride All
