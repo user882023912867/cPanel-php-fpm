@@ -344,12 +344,12 @@ pm.max_requests = 10000
 ;       possible. However, all PHP paths will be relative to the chroot
 ;       (error_log, sessions.save_path, ...).
 ; Default Value: not set
-chroot = /home/CPANELUSER/
+chroot = /home/CPANELUSER
  
 ; Chdir to this directory at the start.
 ; Note: relative path can be used.
 ; Default Value: current directory or / when chroot
-chdir = /public_html/
+chdir = /public_html
  
 ; Redirect worker stdout and stderr into main error log. If not set, stdout and
 ; stderr will be redirected to /dev/null according to FastCGI specs.
@@ -373,16 +373,16 @@ chdir = /public_html/
 ; exectute php code.
 ; Note: set an empty value to allow all extensions.
 ; Default Value: .php
-;security.limit_extensions = .php .php3 .php4 .php5
+security.limit_extensions = .php
  
 ; Pass environment variables like LD_LIBRARY_PATH. All $VARIABLEs are taken from
 ; the current environment.
 ; Default Value: clean env
 ;env[HOSTNAME] = $HOSTNAME
 ;env[PATH] = /usr/local/bin:/usr/bin:/bin
-;env[TMP] = /tmp
-;env[TMPDIR] = /tmp
-;env[TEMP] = /tmp
+env[TMP] = /public_html/tmp
+env[TMPDIR] = /public_html/tmp
+env[TEMP] = /public_html/tmp
 
 ; Additional php.ini defines, specific to this pool of workers. These settings
 ; overwrite the values previously defined in the php.ini. The directives are the
@@ -406,9 +406,9 @@ chdir = /public_html/
 ;php_admin_value[sendmail_path] = /usr/sbin/sendmail -t -i -f www@my.domain.com
 php_flag[display_errors] = off
 php_admin_value[error_log] = /public_html/var/log/php-fpm-error.log
-php_admin_value[doc_root] = /public_html/
-php_admin_value[open_basedir] = /public_html/
-php_admin_value[cgi.fix_pathinfo] = 0
+php_admin_value[doc_root] = /public_html
+php_admin_value[open_basedir] = /public_html
+php_admin_value[cgi.fix_pathinfo] = 1
 php_admin_value[iconv.internal_encoding] = UTF-8
 php_admin_flag[log_errors] = on
 php_admin_value[memory_limit] = 256M
