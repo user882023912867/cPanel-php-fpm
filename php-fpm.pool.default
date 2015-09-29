@@ -39,7 +39,7 @@ group = CPANELUSER
 ;                            specific port;
 ;   '/path/to/unix/socket' - to listen on a unix socket.
 ; Note: This value is mandatory.
-listen = /home/CPANELUSER/var/run/php-fpm/CPANELUSER.sock
+listen = /var/run/php-fpm/CPANELUSER.sock
 
 ; Set listen(2) backlog.
 ; Default Value: 128 (-1 on FreeBSD and OpenBSD)
