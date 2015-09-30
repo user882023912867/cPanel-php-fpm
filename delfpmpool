@@ -1,5 +1,6 @@
 #!/bin/bash
 cpaneluser=$1
-rm -f /opt/cpfpm/php-fpm.pool.d/$cpaneluser.conf
-/etc/init.d/php-fpm reload
+rm -f /opt/cpfpm/php-fpm.pool.d/${cpaneluser}.conf
+rm -f /usr/local/etc/php-fpm-${cpaneluser}.conf
+rm -f /etc/init.d/php-fpm-${cpaneluser}
 exit 0
