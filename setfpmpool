@@ -9,5 +9,5 @@ mkdir -p /home/${cpaneluser}/usr/share
 fi
 chmod +x /etc/init.d/php-fpm-${cpaneluser}
 chkconfig php-fpm-${cpaneluser} on
-/etc/init.d/php-fpm-${cpaneluser} reload
+/etc/init.d/php-fpm-${cpaneluser} restart
 exit 0
