@@ -14,8 +14,8 @@ prefix=/usr/local
 exec_prefix=${prefix}
 
 php_fpm_BIN=${exec_prefix}/sbin/php-fpm
-php_fpm_CONF=${prefix}/etc/php-fpm.conf
-php_fpm_PID=/var/run/php-fpm/php-fpm.pid
+php_fpm_CONF=${prefix}/etc/php-fpm-CPANELUSER.conf
+php_fpm_PID=/var/run/php-fpm/CPANELUSER.pid
 
 
 php_opts="--fpm-config $php_fpm_CONF --pid $php_fpm_PID"
@@ -52,7 +52,7 @@ wait_for_pid () {
 
 case "$1" in
 	start)
-		echo -n "Starting php-fpm "
+		echo -n "Starting php-fpm for CPANELUSER "
 
 		$php_fpm_BIN --daemonize $php_opts
 
@@ -72,10 +72,10 @@ case "$1" in
 	;;
 
 	stop)
-		echo -n "Gracefully shutting down php-fpm "
+		echo -n "Gracefully shutting down php-fpm for CPANELUSER"
 
 		if [ ! -r $php_fpm_PID ] ; then
-			echo "warning, no pid file found - php-fpm is not running ?"
+			echo "warning, no pid file found - php-fpm for CPANELUSER is not running ?"
 			exit 1
 		fi
 
@@ -93,23 +93,23 @@ case "$1" in
 
 	status)
 		if [ ! -r $php_fpm_PID ] ; then
-			echo "php-fpm is stopped"
+			echo "php-fpm for CPANELUSER is stopped"
 			exit 0
 		fi
 
 		PID=`cat $php_fpm_PID`
 		if ps -p $PID | grep -q $PID; then
-			echo "php-fpm (pid $PID) is running..."
+			echo "php-fpm for CPANELUSER (pid $PID) is running..."
 		else
-			echo "php-fpm dead but pid file exists"
+			echo "php-fpm for CPANELUSER dead but pid file exists"
 		fi
 	;;
 
 	force-quit)
-		echo -n "Terminating php-fpm "
+		echo -n "Terminating php-fpm for CPANELUSER"
 
 		if [ ! -r $php_fpm_PID ] ; then
-			echo "warning, no pid file found - php-fpm is not running ?"
+			echo "warning, no pid file found - php-fpm for CPANELUSER is not running ?"
 			exit 1
 		fi
 
@@ -132,10 +132,10 @@ case "$1" in
 
 	reload)
 
-		echo -n "Reload service php-fpm "
+		echo -n "Reload service php-fpm for CPANELUSER"
 
 		if [ ! -r $php_fpm_PID ] ; then
-			echo "warning, no pid file found - php-fpm is not running ?"
+			echo "warning, no pid file found - php-fpm for CPANELUSER is not running ?"
 			exit 1
 		fi
 
