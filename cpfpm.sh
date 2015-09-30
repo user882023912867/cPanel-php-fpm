@@ -75,8 +75,6 @@ else
 	mkdir /opt/cpfpm/php-fpm.pool.d
 	mkdir /opt/cpfpm/defaultconfs
 	mkdir /opt/cpfpm/scripts
-	wget -O /usr/local/etc/php-fpm.conf https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/php-fpm.conf.default
-	service php-fpm restart
 
 	echo -e '\e[93mAdding Custom Apache templates\e[0m'
 	wget -O /opt/cpfpm/defaultconfs/proxypassphp.include https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/proxypassphp.include
@@ -85,6 +83,7 @@ else
 	sed -i '/DocumentRoot/ r /opt/cpfpm/defaultconfs/proxypassphp.include' /var/cpanel/templates/apache2_4/vhost.local
 	sed -i '/DocumentRoot/ r /opt/cpfpm/defaultconfs/proxypassphp.include' /var/cpanel/templates/apache2_4/ssl_vhost.local
 	wget -O /opt/cpfpm/defaultconfs/php-fpm.pool.default https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/php-fpm.pool.default
+	wget -O /usr/local/etc/php-fpm.conf.default https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/php-fpm.conf.default
 
 	echo -e '\e[93mSetting up cpanel hooks\e[0m'
 	wget -O /opt/cpfpm/scripts/setfpmpool https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/setfpmpool
