@@ -7,7 +7,7 @@ if [ ! -d "/home/${cpaneluser}/usr/share/zoneinfo" ]; then
 mkdir -p /home/${cpaneluser}/usr/share
 \cp -rf /usr/share/zoneinfo  /home/${cpaneluser}/usr/share/
 fi
-chmod +x php-fpm-${cpaneluser}
+chmod +x /etc/init.d/php-fpm-${cpaneluser}
 chkconfig php-fpm-${cpaneluser} on
 /etc/init.d/php-fpm-${cpaneluser} reload
 exit 0
