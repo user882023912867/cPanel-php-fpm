@@ -67,11 +67,11 @@ if [ ${proxy_fcgi} -eq 1 -o ${php_fpm} -eq 1 ];then
 	echo -e '\e[45mOnce EasyApache is complete with above options rerun this script again with install option selected to complete cpfpm installation \e[0m'
 else 
 	echo -e '\e[93mProceeding with cpfpm setup\e[0m'
-	mkdir /var/run/php-fpm
+	mkdir -p /var/run/php-fpm
 	mkdir -p /opt/cpfpm
-	mkdir /opt/cpfpm/php-fpm.pool.d
-	mkdir /opt/cpfpm/defaultconfs
-	mkdir /opt/cpfpm/scripts
+	mkdir -p /opt/cpfpm/php-fpm.pool.d
+	mkdir -p /opt/cpfpm/defaultconfs
+	mkdir -p /opt/cpfpm/scripts
 	wget -O /opt/cpfpm/defaultconfs/init.d.php-fpm https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/init.d.php-fpm
 	wget -O /opt/cpfpm/defaultconfs/php-fpm.pool.default https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/php-fpm.pool.default
 	wget -O /usr/local/etc/php-fpm.conf.default https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/php-fpm.conf.default
