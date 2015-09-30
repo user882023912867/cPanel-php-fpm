@@ -1,10 +1,13 @@
 #!/bin/bash
 cpaneluser=$1
+sed "s/CPANELUSER/${cpaneluser}/g" /opt/cpfpm/defaultconfs/init.d.php-fpm > /etc/init.d/php-fpm-${cpaneluser}
 sed "s/CPANELUSER/${cpaneluser}/g" /usr/local/etc/php-fpm.conf.default > /usr/local/etc/php-fpm-${cpaneluser}.conf
 sed "s/CPANELUSER/${cpaneluser}/g" /opt/cpfpm/defaultconfs/php-fpm.pool.default > /opt/cpfpm/php-fpm.pool.d/${cpaneluser}.conf
 if [ ! -d "/home/${cpaneluser}/usr/share/zoneinfo" ]; then
 mkdir -p /home/${cpaneluser}/usr/share
 \cp -rf /usr/share/zoneinfo  /home/${cpaneluser}/usr/share/
 fi
+chmod +x php-fpm-${cpaneluser}
+chkconfig php-fpm-${cpaneluser} on
 /etc/init.d/php-fpm-${cpaneluser} reload
 exit 0
