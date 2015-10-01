@@ -1,6 +1,6 @@
 # cPanel-php-fpm
 ./cpfpm.sh install
-========
 
 
-optimizing for CentOS 7
+CentOS 6<br/>
+CentOS 7
