@@ -72,6 +72,7 @@ else
 	mkdir -p /opt/cpfpm/php-fpm.pool.d
 	mkdir -p /opt/cpfpm/defaultconfs
 	mkdir -p /opt/cpfpm/scripts
+	wget -O /opt/cpfpm/defaultconfs/php-fpm.service.default https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/php-fpm.service.default
 	wget -O /opt/cpfpm/defaultconfs/init.d.php-fpm https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/init.d.php-fpm
 	wget -O /opt/cpfpm/defaultconfs/php-fpm.pool.default https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/php-fpm.pool.default
 	wget -O /usr/local/etc/php-fpm.conf.default https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/php-fpm.conf.default
