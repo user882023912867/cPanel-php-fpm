@@ -1,13 +1,11 @@
 #!/bin/bash
 cpaneluser=$1
-
 REDISPASS=$(head -c 500 /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 
 mkdir -p /var/lib/redis/redis-${cpaneluser} && chmod 755 $_ && chown redis $_
 mkdir -p /home/${cpaneluser}/var/run/redis/ && chown redis $_
 
 \cp -rf /etc/redis.conf /etc/redis-${cpaneluser}.conf
-\cp -rf /usr/lib/systemd/system/redis.service.default /usr/lib/systemd/system/redis-${cpaneluser}.service
 
 sed -i "s/daemonize no/daemonize yes/"  /etc/redis-${cpaneluser}.conf
 sed -i "s/^dir.*/dir \/var\/lib\/redis\/redis-${cpaneluser}\//"  /etc/redis-${cpaneluser}.conf
@@ -21,8 +19,15 @@ sed -i "s/.*requirepass foobared.*/requirepass ${REDISPASS}/" /etc/redis-${cpane
 sed -i "s/.*# maxmemory <bytes>.*/maxmemory 256mb/" /etc/redis-${cpaneluser}.conf
 sed -i "s/.*# maxmemory-policy volatile-lru.*/maxmemory-policy allkeys-lru/" /etc/redis-${cpaneluser}.conf
 
+if grep "CentOS.* 7\." /etc/centos-release; then
+\cp -rf /usr/lib/systemd/system/redis.service /usr/lib/systemd/system/redis-${cpaneluser}.service
 sed -i "s/redis.conf/redis-${cpaneluser}.conf/" /usr/lib/systemd/system/redis-${cpaneluser}.service
-
 systemctl daemon-reload
 systemctl enable redis-${cpaneluser} >/dev/null 2>&1
-systemctl restart  redis-${cpaneluser}.service >/dev/null 2>&1
+systemctl restart redis-${cpaneluser}.service >/dev/null 2>&1
+else
+sed "s/CPANELUSER/${cpaneluser}/g" /opt/cpfpm/defaultconfs/init.d.redis > /etc/init.d/redis-${cpaneluser}
+chmod +x /etc/init.d/redis-${cpaneluser}
+chkconfig redis-${cpaneluser} on
+/etc/init.d/redis-${cpaneluser} restart
+fi
