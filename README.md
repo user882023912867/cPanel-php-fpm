@@ -1,4 +1,4 @@
-# cPanel-php-fpm
+# cPanel-php-fpm + redis isolated setup per account
 ./cpfpm.sh install
 
 
