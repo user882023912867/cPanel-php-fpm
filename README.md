@@ -14,7 +14,7 @@ yum -y --enablerepo=remi install redis<br/>
 yum -y install epel-release<br/>
 rpm -Uhv http://rpms.famillecollet.com/enterprise/remi-release-7.rpm<br/>
 yum -y --enablerepo=remi install redis<br/>
-
-wget https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/cpfpm.sh
-chmod +x cpfpm.sh
-./cpfpm.sh install
+<br/>
+wget https://raw.githubusercontent.com/magenx/cPanel-php-fpm/master/cpfpm.sh<br/>
+chmod +x cpfpm.sh<br/>
+./cpfpm.sh install<br/>
