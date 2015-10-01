@@ -1,5 +1,5 @@
 #!/bin/bash
-## (C) sysally.net
+## (C) idea from sysally.net script
 
 cpfpm_uninstall(){
 
