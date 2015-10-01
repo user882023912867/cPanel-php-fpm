@@ -1,6 +1,4 @@
 # cPanel-php-fpm + redis setup per account
-./cpfpm.sh install
-
 
 CentOS 6<br/>
 CentOS 7
@@ -16,3 +14,6 @@ yum -y --enablerepo=remi install redis<br/>
 yum -y install epel-release<br/>
 rpm -Uhv http://rpms.famillecollet.com/enterprise/remi-release-7.rpm<br/>
 yum -y --enablerepo=remi install redis<br/>
+
+
+./cpfpm.sh install
