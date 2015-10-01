@@ -1,13 +1,25 @@
 #!/bin/bash
 cpaneluser=$1
-sed "s/CPANELUSER/${cpaneluser}/g" /opt/cpfpm/defaultconfs/init.d.php-fpm > /etc/init.d/php-fpm-${cpaneluser}
+
 sed "s/CPANELUSER/${cpaneluser}/g" /usr/local/etc/php-fpm.conf.default > /usr/local/etc/php-fpm-${cpaneluser}.conf
 sed "s/CPANELUSER/${cpaneluser}/g" /opt/cpfpm/defaultconfs/php-fpm.pool.default > /opt/cpfpm/php-fpm.pool.d/${cpaneluser}.conf
+
+if grep "CentOS.* 7\." /etc/centos-release; then
+## CentOS 7
+sed "s/CPANELUSER/${cpaneluser}/g" /opt/cpfpm/defaultconfs/php-fpm.service.default > /usr/lib/systemd/system/php-fpm-${cpaneluser}.service
+systemctl daemon-reload
+systemctl enable php-fpm-${cpaneluser} >/dev/null 2>&1
+systemctl restart php-fpm-${cpaneluser}.service >/dev/null 2>&1
+else
+## CentOS 6
+sed "s/CPANELUSER/${cpaneluser}/g" /opt/cpfpm/defaultconfs/init.d.php-fpm > /etc/init.d/php-fpm-${cpaneluser}
+chmod +x /etc/init.d/php-fpm-${cpaneluser}
+chkconfig php-fpm-${cpaneluser} on
+/etc/init.d/php-fpm-${cpaneluser} restart
+fi
+
 if [ ! -d "/home/${cpaneluser}/usr/share/zoneinfo" ]; then
 mkdir -p /home/${cpaneluser}/usr/share
 \cp -rf /usr/share/zoneinfo  /home/${cpaneluser}/usr/share/
 fi
-chmod +x /etc/init.d/php-fpm-${cpaneluser}
-chkconfig php-fpm-${cpaneluser} on
-/etc/init.d/php-fpm-${cpaneluser} restart
 exit 0
