@@ -4,6 +4,7 @@ cpaneluser=$1
 sed "s/CPANELUSER/${cpaneluser}/g" /usr/local/etc/php-fpm.conf.default > /usr/local/etc/php-fpm-${cpaneluser}.conf
 sed "s/CPANELUSER/${cpaneluser}/g" /opt/cpfpm/defaultconfs/php-fpm.pool.default > /opt/cpfpm/php-fpm.pool.d/${cpaneluser}.conf
 
+## Enabling dedicated php-fpm service for user account
 if grep "CentOS.* 7\." /etc/centos-release; then
 ## CentOS 7
 sed "s/CPANELUSER/${cpaneluser}/g" /opt/cpfpm/defaultconfs/php-fpm.service.default > /usr/lib/systemd/system/php-fpm-${cpaneluser}.service
