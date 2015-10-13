@@ -22,7 +22,7 @@ fi
 
 if [ ! -d "/home/${cpaneluser}/usr/share/zoneinfo" ]; then
 mkdir -p /home/${cpaneluser}/usr/share
-mkdir -p /home/${cpaneluser}/{dev,pki,etc,lib64}
+mkdir -p /home/${cpaneluser}/{tmp,dev,pki,etc,lib64}
 cp /etc/nsswitch.conf  /home/${cpaneluser}/etc/
 cp /etc/resolv.conf  /home/${cpaneluser}/etc/
 cp -rf /etc/pki/{CA,ca-trust,tls,nssdb} /home/${cpaneluser}/pki/
