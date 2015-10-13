@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir {dev,pki,etc}
+mkdir {dev,pki,etc,lib64}
 cp /etc/nsswitch.conf  etc/
 cp /etc/resolv.conf  etc/
 cp -rf /etc/pki/{CA,ca-trust,tls,nssdb} pki/
