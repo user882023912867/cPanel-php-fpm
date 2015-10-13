@@ -2,7 +2,7 @@
 cpaneluser=$1
 
 ## Master config and php-fpm pool for account
-sed "s/CPANELUSER/${cpaneluser}/g" /usr/local/etc/php-fpm.conf.default > /usr/local/etc/php-fpm-${cpaneluser}.conf
+sed "s/CPANELUSER/${cpaneluser}/g" /opt/cpfpm/defaultconfs/php-fpm.conf.default > /usr/local/etc/php-fpm-${cpaneluser}.conf
 sed "s/CPANELUSER/${cpaneluser}/g" /opt/cpfpm/defaultconfs/php-fpm.pool.default > /opt/cpfpm/php-fpm.pool.d/${cpaneluser}.conf
 
 ## Enabling dedicated php-fpm service for user account
