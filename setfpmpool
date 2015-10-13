@@ -22,6 +22,13 @@ fi
 
 if [ ! -d "/home/${cpaneluser}/usr/share/zoneinfo" ]; then
 mkdir -p /home/${cpaneluser}/usr/share
-\cp -rf /usr/share/zoneinfo  /home/${cpaneluser}/usr/share/
+mkdir -p /home/${cpaneluser}/{dev,pki,etc,lib64}
+cp /etc/nsswitch.conf  /home/${cpaneluser}/etc/
+cp /etc/resolv.conf  /home/${cpaneluser}/etc/
+cp -rf /etc/pki/{CA,ca-trust,tls,nssdb} /home/${cpaneluser}/pki/
+cp /lib64/{libsoftokn3.*,libnss*,libfreebl*} /home/${cpaneluser}/lib64/
+cp -rf /usr/share/zoneinfo  /home/${cpaneluser}/usr/share/
+mknod -m 666 /home/${cpaneluser}/dev/urandom c 1 9
 fi
+
 exit 0
