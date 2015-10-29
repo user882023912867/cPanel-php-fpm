@@ -25,7 +25,7 @@ mkdir -p /home/${cpaneluser}/{etc/pki,usr/share,tmp,dev,lib64}
 cp /etc/nsswitch.conf  /home/${cpaneluser}/etc/
 cp /etc/resolv.conf  /home/${cpaneluser}/etc/
 cp -rf /etc/pki/{CA,ca-trust,tls,nssdb} /home/${cpaneluser}/etc/pki/
-cp /lib64/{libsoftokn3.*,libnss*,libfreebl*} /home/${cpaneluser}/lib64/
+\cp -Lrf {/usr/lib64/,/lib64/}{libnss*,libsoftokn*,libfreebl*}  /home/${cpaneluser}/lib64/
 cp -rf /usr/share/zoneinfo  /home/${cpaneluser}/usr/share/
 mknod -m 666 /home/${cpaneluser}/dev/urandom c 1 9
 fi
