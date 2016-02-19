@@ -10,6 +10,7 @@
 # Description:       starts the PHP FastCGI Process Manager daemon
 ### END INIT INFO
 
+mkdir -p /var/run/php-fpm
 prefix=/usr/local
 exec_prefix=${prefix}
 
