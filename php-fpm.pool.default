@@ -380,9 +380,9 @@ security.limit_extensions = .php
 ; Default Value: clean env
 ;env[HOSTNAME] = $HOSTNAME
 ;env[PATH] = /usr/local/bin:/usr/bin:/bin
-env[TMP] = tmp
-env[TMPDIR] = tmp
-env[TEMP] = tmp
+env[TMP] = /public_html/var/tmp
+env[TMPDIR] = /public_html/var/tmp
+env[TEMP] = /public_html/var/tmp
 
 ; Additional php.ini defines, specific to this pool of workers. These settings
 ; overwrite the values previously defined in the php.ini. The directives are the
@@ -412,3 +412,4 @@ php_admin_value[cgi.fix_pathinfo] = 1
 php_admin_value[iconv.internal_encoding] = UTF-8
 php_admin_flag[log_errors] = on
 php_admin_value[memory_limit] = 256M
+php_admin_value[upload_tmp_dir] = /public_html/var/tmp
